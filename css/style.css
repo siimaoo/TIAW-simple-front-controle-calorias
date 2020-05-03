@@ -1,0 +1,159 @@
+@import "https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap-grid.min.css";
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif;
+}
+
+#dashboard {
+  min-height: 100vh;
+}
+
+.informacoes {
+  color: rgb(100, 100, 100);
+  width: 90%;
+  max-width: 500px;
+}
+
+.nome_pessoa {
+  font-size: 40px;
+  font-family: sans-serif;
+  font-weight: 900;
+}
+
+.normal {
+  font-weight: 900;
+  color: rgb(100, 100, 100);
+}
+
+.barra {
+  background-color: rgb(71, 255, 71);
+  border-radius: 10px;
+  height: 10px;
+  width: 73%;
+  padding: 0px 10px;
+}
+
+.imagem {
+  width: 100%;
+}
+
+.card-container.card {
+  height: 95%;
+}
+
+.card {
+  padding: 40px 50px;
+  border-radius: 3%;
+  -moz-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+  -webkit-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.barra2 {
+  background-color: rgb(71, 255, 71);
+  border-radius: 10px;
+  height: 10px;
+  width: 100%;
+  padding: 0px 10px;
+  margin-top: 10px;
+}
+
+.abaixo_barra2 {
+  margin-top: 10px;
+}
+
+.maximo {
+  margin-top: 10px;
+}
+
+.estimativa {
+  margin-top: 10px;
+  font-weight: 800;
+  color: rgb(100, 100, 100);
+}
+
+.novoitem {
+  margin-top: 30px;
+}
+
+.btn_novoitem {
+  cursor: pointer;
+  background-color: rgb(71, 255, 71);
+  outline: none;
+  padding: 8px;
+  color: white;
+  font-size: 1.0rem;
+  font-weight: 900;
+  border-radius: 10px;
+  border-style: none;
+  height: 40px;
+}
+
+.product {
+  padding-bottom: 20px;
+  margin-top: 60px;
+  border-bottom: solid 2px;
+  border-color: rgb(167, 167, 167);
+}
+
+.products {
+  max-height: 350px;
+  margin-top: 20px;
+  overflow-y: auto;
+}
+
+.fa-minus-square {
+  color: red;
+}
+
+.fundoModal {
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  box-shadow: 0px 0px 3px 1px rgb(100, 100, 100);
+  width: 90%;
+  height: auto;
+  max-width: 500px;
+  background: #fff;
+  border-radius: 5px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: absolute;
+  padding: 10px;
+  max-height: 500px;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+input {
+  height: 35px;
+  width: 100%;
+  margin: 10px 0;
+  padding: 0px 10px;
+}
+
+.btnAdd {
+  cursor: pointer;
+  background-color: rgb(71, 255, 71);
+  outline: none;
+  padding: 8px;
+  color: white;
+  font-size: 1.0rem;
+  font-weight: 900;
+  border-radius: 10px;
+  border-style: none;
+  height: 40px;
+  width: 100%;
+}

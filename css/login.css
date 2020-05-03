@@ -1,0 +1,81 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Nunito', sans-serif !important;
+}
+
+a {
+  text-decoration: none;
+  color: #00a1ff;
+}
+
+.imagem {
+  width: 100%;
+  height: auto;
+}
+
+.imagem.min {
+  width: auto;
+  height: 350px;
+}
+
+.w-90 {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.titulo {
+  font-size: 2rem;
+  font-weight: 900;
+  color: rgb(100, 100, 100);
+  margin: 20px 0;
+}
+
+.card {
+  width: 90%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);
+  border-radius: 3%;
+  padding: 80px 30px;
+}
+
+.email, .password, .height, .weight, .name, .lastName, #btn_submit {
+  height: 35px;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 0px 10px;
+}
+
+#btn_submit {
+  cursor: pointer;
+  background-color: #00a1ff;
+  outline: none;
+  margin: 20px 0px;
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: none;
+  height: 40px;
+}
+
+#login {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#instrucoes {
+  color: red;
+}
+
+@media (max-width: 767px) {
+  .imagem {
+    display: none;
+  }
+}
