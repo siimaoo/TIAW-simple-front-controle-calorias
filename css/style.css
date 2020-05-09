@@ -29,7 +29,6 @@
 }
 
 .barra {
-  background-color: rgb(71, 255, 71);
   border-radius: 10px;
   height: 10px;
   width: 73%;
@@ -156,4 +155,24 @@ input {
   border-style: none;
   height: 40px;
   width: 100%;
+}
+
+.green {
+  background-color: rgb(71, 255, 71);
+}
+
+.yellow {
+  background-color: rgb(255, 221, 71);
+}
+
+.orange {
+  background-color: rgb(255, 102, 0);
+}
+
+.red {
+  background-color: rgb(255, 0, 0);
+}
+
+.darkred {
+  background-color: rgb(94, 22, 22);
 }
