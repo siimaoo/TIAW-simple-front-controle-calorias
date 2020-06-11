@@ -163,10 +163,15 @@
             <span>Adicionar</span>
           </div>
         </div>
-        <div class="row" v-for="(item, index) in searchItems" :key="index">
+        <div class="row" 
+          v-for="(item, index) in searchItems" 
+          :key="index"
+        >
           <div class="col-5">{{item.Alimento}}</div>
           <div class="col-4">{{item.Calorias}}</div>
-          <div class="col-3"></div>
+          <div class="col-3">
+            <button @click="addItem(item)" class="btnAdd">+</button>
+          </div>
         </div>
       </div>
     </div>
@@ -265,7 +270,7 @@
           const date = new Date;
           const dayWeek = date.getDay();
 
-          const stringDays = ['sunday', 'monday', 'tuesday', 'wednesday', ' thursday', 'friday', 'saturday'];
+          const stringDays = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
           this.dayWeek = stringDays[dayWeek];
 
@@ -308,6 +313,7 @@
             headers: { "x-access-token": this.token }
           })
             .then(({ data }) => {
+              this.isVisible = false;
               this.consume.totalOfDay = data.data.consume[this.dayWeek].total;
               this.consume.items = data.data.consume[this.dayWeek].items;
               this.refresh = true;
@@ -319,6 +325,15 @@
                 kcal: undefined
               }
             })
+        },
+        addItem(item) {
+          this.formData = {
+            name: item.Alimento,
+            quantity: item.Unidade,
+            weight: item.Peso,
+            kcal: item.Calorias
+          };
+          this.add();
         }
       }
     })
