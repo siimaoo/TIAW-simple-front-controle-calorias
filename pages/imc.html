@@ -93,7 +93,7 @@
           this.formData.height = this.formData.height.replace(',', '.');
           this.formData.weight = this.formData.weight.replace(',', '.');
 
-          axios.put(`http://localhost:3000/users/imc/${this.id}`, this.formData, {
+          axios.put(`https://controle-calorias-api.herokuapp.com/users/imc/${this.id}`, this.formData, {
             headers: { "x-access-token": this.token }
           })
             .then(async ({ data }) => {

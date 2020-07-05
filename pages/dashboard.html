@@ -98,7 +98,7 @@
 
             <div class=" estimativa row">
               <div class=" col-10">
-                COMO FOI FEITA ESSA ESTIMATIVA? <i class="fas fa-question-circle"></i>
+                COMO FOI FEITA ESSA ESTIMATIVA? <i class="fas fa-question-circle" title="O metodo utiliza foi o calculo da regra do bolso"></i>
               </div>
 
             </div>
@@ -127,6 +127,17 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+      
+      <div class="row">
+        <div class="col-sm-12 col-md-6 ">
+          <div class="box-receitas" v-html="recipe">
+          </div>
+        </div>
+          
+        <div class="col-sm-12 col-md-6 d-flex justify-content-center align-items-center">
+          <img class="imagem-receita" src="/images/undraw_cooking_lyxy.svg" alt="">
         </div>
       </div>
     </div>
@@ -175,6 +186,7 @@
           </div>
         </div>
       </div>
+      
     </div>
   </section>
 
@@ -184,6 +196,7 @@
     var app = new Vue({
       el: '#dashboard',
       data: {
+        recipe: '',
         token: '',
         user: {},
         error: '',
@@ -244,7 +257,9 @@
 
         await this.getCurrentDay();
 
-        axios.get(`http://localhost:3000/users/${this.user.id}`, {
+        this.getRecipe();
+
+        axios.get(`https://controle-calorias-api.herokuapp.com/users/${this.user.id}`, {
           headers: { "x-access-token": this.token }
         })
           .then(({ data }) => {
@@ -276,8 +291,18 @@
           this.dayWeek = stringDays[dayWeek];
 
         },
+
+        getRecipe() {
+          axios.get('https://controle-calorias-api.herokuapp.com/recipe')
+            .then(({data}) => {
+              this.recipe = data[0].recipe;
+            }).catch(() => {
+              console.log('erro');
+            })  
+        },
+
         removeItem(id) {
-          axios.put(`http://localhost:3000/items/delete/${this.user.id}`, {
+          axios.put(`https://controle-calorias-api.herokuapp.com/items/delete/${this.user.id}`, {
             idOfItem: id
           }, {
             headers: { "x-access-token": this.token }
@@ -294,7 +319,7 @@
           this.isVisible = param1;
         },
         search() {
-          axios.get(`http://localhost:3000/items/${this.searchString}`)
+          axios.get(`https://controle-calorias-api.herokuapp.com/items/${this.searchString}`)
             .then(({ data }) => {
               this.t = true;
               this.searchItems = data.data;
@@ -310,7 +335,7 @@
         },
         add() {
           this.refresh = false;
-          axios.put(`http://localhost:3000/items/add/${this.user.id}`, this.formData, {
+          axios.put(`https://controle-calorias-api.herokuapp.com/items/add/${this.user.id}`, this.formData, {
             headers: { "x-access-token": this.token }
           })
             .then(({ data }) => {

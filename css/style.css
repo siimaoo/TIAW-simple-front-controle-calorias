@@ -39,11 +39,19 @@
   width: 100%;
 }
 
+.imagem-receita {
+  height: 350px;
+}
+
 .card-container.card {
   height: 95%;
 }
 
-.card {
+.box-receitas {
+  margin: 30px 0;
+}
+
+.card, .box-receitas {
   padding: 40px 50px;
   border-radius: 3%;
   -moz-box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.3);

@@ -149,7 +149,7 @@
 
         signup() {
           this.error = '';
-          axios.post('http://localhost:3000/users/create', this.formData)
+          axios.post('https://controle-calorias-api.herokuapp.com/users/create', this.formData)
           .then(({data}) => {
             if(!data.success) {
               this.error = data.message;
