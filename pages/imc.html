@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+  <title>IMC | Controle de Calorias</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap-grid.min.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/login.css">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+
+<body>
+  <section id="login">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="w-90">
+            <h1 class="titulo">
+              CONTROLE DE <br />CALORIAS
+            </h1>
+
+            <img class="imagem" src="/images/undraw_Calculator_0evy.svg">
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6 d-flex justify-content-center">
+          <div class="card">
+            <form @submit.prevent class="formulario" id="form">
+              <label for="height">
+                Altura:
+              </label>
+
+              <input type="text" class="height" name="height" id="height" v-model="formData.height" />
+
+              <label for="weight">
+                Peso:
+              </label>
+
+              <input type="weight" class="weight" name="weight" id="weight" v-model="formData.weight" />
+
+              <span id="instrucoes" v-if="error">
+                {{error}}
+              </span>
+
+              <button type="submit" id="btn_submit" @click="validate()">
+                Calcular IMC
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    var app = new Vue({
+      el: '#login',
+
+      data: {
+        formData: {
+          height: '',
+          weight: ''
+        },
+        error: '',
+        imc: '',
+        recomendedKcal: '',
+        token: localStorage.getItem('token'),
+        id: JSON.parse(localStorage.getItem('user')).id
+      },
+
+      methods: {
+        validate() {
+          const regex = new RegExp(/^(?!0*[.,]?0+$)\d*[.,]?\d+$/g);
+          const regex2 = new RegExp(/^(?!0*[.,]?0+$)\d*[.,]?\d+$/g);
+          if (this.formData.height == '' || this.formData.weight == '') {
+            this.error = "Preencha todos os campos!";
+          } else if (!regex.test(this.formData.height) || !regex2.test(this.formData.weight)) {
+            this.error = "Digite apenas numeros. Ex: 1.79 72.900";
+          } else {
+            this.calcular();
+          }
+        },
+
+        calcular() {
+          this.error = '';
+          this.formData.height = this.formData.height.replace(',', '.');
+          this.formData.weight = this.formData.weight.replace(',', '.');
+
+          axios.put(`https://controle-calorias-api.herokuapp.com/users/imc/${this.id}`, this.formData, {
+            headers: { "x-access-token": this.token }
+          })
+            .then(async ({ data }) => {
+              if (!data.success) {
+                this.error = data.message;
+              } else {
+                this.error = '';
+                this.imc = data.data.imc;
+                this.recomendedKcal = data.data.recomendedKcal;
+                let obj = {
+                  id: data.data._id,
+                  name: data.data.name,
+                  lastName: data.data.lastName,
+                  height: data.data.height,
+                  weight: data.data.weight,
+                  imc: data.data.imc,
+                  recomendedKcal: data.data.recomendedKcal,
+                  positiveWeeks: data.data.positiveWeeks
+                };
+
+                localStorage.clear();
+                await localStorage.setItem('user', JSON.stringify(obj));
+                await localStorage.setItem('token', this.token);
+                
+                window.location.href = 'dashboard.html';
+              }
+            })
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <title>Login | Controle de Calorias</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap-grid.min.css" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,600;0,700;0,800;0,900;1,200;1,300;1,400;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="/css/login.css">
+</head>
+
+<body>
+  <section id="login">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-12 col-md-6">
+          <div class="w-90">
+            <h1 class="titulo">
+              CONTROLE DE <br />CALORIAS
+            </h1>
+  
+            <img 
+              class="imagem" 
+              src="/images/undraw_diet_ghvw.svg"
+            >
+          </div>
+        </div>
+
+        <div class="col-sm-12 col-md-6 d-flex justify-content-center">
+            <div class="card">
+              <form 
+                @submit.prevent 
+                class="formulario" 
+                id="form"
+              >
+                <label for="email">
+                  E-mail:
+                </label>
+
+                <input 
+                  type="text" 
+                  class="email" 
+                  name="email" 
+                  id="email" 
+                  v-model="formData.email"
+                />
+
+                <label for="password">
+                  Senha:
+                </label>
+
+                <input 
+                  type="password" 
+                  class="password" 
+                  name="password" 
+                  id="password" 
+                  v-model="formData.password"
+                />
+
+                <span 
+                  id="instrucoes" 
+                  v-if="error"
+                >
+                  {{error}}
+                </span>
+                
+                <p>
+                  Não possui uma conta? 
+                  <a href="cadastro.html">
+                    Cadastre-se
+                  </a> 
+                </p>
+
+                <button 
+                  type="submit" 
+                  id="btn_submit"
+                  @click="validate()"
+                >
+                  Entrar
+                </button>
+              </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script>
+    var app = new Vue({
+      el: '#form',
+
+      data: {
+        formData: {
+          email: '',
+          password: ''
+        },
+        error: ''
+      },
+
+      methods: {
+        validate() {
+          const regex = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/gi;
+          const passwordReg = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*.()@%&]).{6,16}$/g;
+          if(this.formData.email == '' || this.formData.password == '') {
+            this.error = "Preencha todos os campos!";
+          } else if (this.formData.password < 6 || this.formData.password > 16 || !passwordReg.test(this.formData.password)) {
+            this.error = "Sua senha deve ter de 6 a 16 caracters, contendo letra maiuscula, minuscula, numeros e um caractere especial (# $ ^ + = ! * . ( ) @ % &)";
+          } else if (!regex.test(this.formData.email)) {
+            this.error = "Digite um e-mail valido!";
+          } else {
+            this.login();
+          }
+        },
+
+        login() {
+          this.error = '';
+          axios.post('https://controle-calorias-api.herokuapp.com/users/signin', this.formData)
+          .then(async ({data}) => {
+            if(!data.success) {
+              this.error = data.message;
+            } else {
+              localStorage.clear();
+              await localStorage.setItem('token', data.token);
+              await localStorage.setItem('user', JSON.stringify({id: data.id}));
+              window.location.href = 'dashboard.html';
+            }
+          })
+        }
+      }
+    })
+  </script>
+</body>
+
+</html>
